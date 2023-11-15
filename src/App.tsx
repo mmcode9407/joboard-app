@@ -1,10 +1,10 @@
 import { Container } from './components/Container/Container';
-import OffersListItem from './components/OffersListItem/OffersListItem';
+import OffersList from './components/OffersList/OffersList';
 
 function App() {
    return (
       <Container>
-         <OffersListItem />
+         <OffersList />
       </Container>
    );
 }
