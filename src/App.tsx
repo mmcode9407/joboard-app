@@ -1,9 +1,10 @@
 import { Container } from './components/Container/Container';
+import OffersListItem from './components/OffersListItem/OffersListItem';
 
 function App() {
    return (
       <Container>
-         <h1>JoBoard 🛹</h1>
+         <OffersListItem />
       </Container>
    );
 }
