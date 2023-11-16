@@ -13,6 +13,7 @@ export default {
          'gray-medium': '#BCBCBC',
          'gray-darkest': '#212121',
          'accent-strong': '#552882',
+         white: '#FFFFFF',
       },
       fontSize: {
          'sb-28': ['28px', { fontWeight: '600' }],
