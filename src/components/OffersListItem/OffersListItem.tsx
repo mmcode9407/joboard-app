@@ -2,7 +2,7 @@
 
 const OffersListItem = () => {
    return (
-      <li className="flex justify-between p-6 border border-gray-light rounded-md">
+      <li className="flex justify-between p-6 border border-gray-light rounded-md bg-white">
          <div className="flex items-center gap-[26px]">
             <img src="public/Rectangle 3.png" alt="test" />
             <div className="flex flex-col gap-2">
