@@ -4,10 +4,15 @@ import { useQuery } from '@tanstack/react-query';
 import { getOffers } from '../../api/offersProvider';
 
 const OffersList = () => {
-   const { data, isSuccess } = useQuery({
+   const { data, isSuccess, isError, error } = useQuery({
       queryKey: ['offers'],
       queryFn: getOffers,
    });
+
+   if (isError) {
+      console.error(error);
+      return null;
+   }
 
    return (
       <ul className="flex flex-col gap-2 h-full overflow-y-auto">
