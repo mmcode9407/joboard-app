@@ -8,7 +8,7 @@
       "build": "tsc & vite build",
       "preview": "vite preview",
       "prepare": "husky install",
-      "format": "npx prettier --write **/*.{ts,tsx,css}"
+      "format": "npx prettier --write **/*.{js,ts,tsx,css}"
    },
    "dependencies": {
       "react": "^18.2.0",
