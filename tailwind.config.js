@@ -2,7 +2,11 @@
 export default {
    content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
    theme: {
-      extend: {},
+      extend: {
+         boxShadow: {
+            checkboxShadow: '0px 0px 4px 0px rgba(149, 100, 212, 0.40)',
+         },
+      },
       fontFamily: { primary: ['Poppins', 'Arial', 'sans-serif'] },
       colors: {
          'gray-outline': 'rgba(84, 84, 84, 0.2)',
