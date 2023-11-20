@@ -1,20 +1,11 @@
-﻿import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
+﻿import React, { ChangeEvent, useState } from 'react';
 import OffersList from '../OffersList/OffersList';
-import SearchInput, { SearchVariant } from '../SearchInput/SearchInput';
-import { useQuery } from '@tanstack/react-query';
-import { getOffers } from '../../api/offersProvider';
-import { Offer } from '../../types/types';
+import { Offer, SearchTerm, SearchVariant } from '../../types/types';
 import { useOffers } from '../../hooks/useOffers';
-import SearchWrapper from '../SearchWrapper/SearchWrapper';
-import SuggestionsList from '../SuggestionsList/SuggestionsList';
-import SearchIcon from '../../icons/SearchIcon';
-import LocationIcon from '../../icons/LocationIcon';
 import { highlightText } from '../../utils/highlightText';
 import { useOutsideClick } from '../../hooks/useOutsideClick';
-
-export type SearchTerm = {
-   [key in SearchVariant]: string;
-};
+import SearchInput from '../SearchInput/SearchInput';
+import SearchWrapper from '../SearchWrapper/SearchWrapper';
 
 export const filterData = (searchTerm: SearchTerm, data: Offer[]) => {
    return data.filter(offer => {
@@ -60,17 +51,14 @@ const Offers = () => {
    return (
       <section className="flex flex-col w-[877px] h-screen p-10 bg-gray-lightest gap-[56px]">
          <div className="flex gap-3 " ref={ref}>
-            <div className="relative flex items-center justify-between w-full h-[50px] pl-6 pr-2 bg-white shadow-checkboxShadow rounded-md">
-               <input
-                  className="w-[287px] h-full text-gray-dark text-md-14 placeholder:text-md-14 placeholder:text-gray-dark outline-none"
-                  type="text"
-                  name="title"
+            <SearchWrapper>
+               <SearchInput
+                  variant={SearchVariant.TITLE}
                   placeholder="Search for"
+                  value={searchTerm}
                   onChange={handleTitleChange}
-                  value={searchTerm.title}
                   onFocus={() => setShowTitleSuggestion(true)}
                />
-               <SearchIcon />
                {showTitleSuggestion && titleSuggestions.length > 0 && (
                   <ul className="absolute top-full translate-y-[2px] left-0 w-full max-h-[188px] flex flex-col shadow-checkboxShadow overflow-y-auto hiddenScrollbar">
                      {titleSuggestions.map(offer => (
@@ -84,7 +72,7 @@ const Offers = () => {
                      ))}
                   </ul>
                )}
-            </div>
+            </SearchWrapper>
          </div>
          {isSuccess && <OffersList offers={filterData(searchTerm, allOffers)} />}
       </section>
