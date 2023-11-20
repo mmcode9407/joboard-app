@@ -25,6 +25,7 @@ const Offers = () => {
    const [citySuggestions, setCitySuggestions] = useState<Offer[]>([]);
    const [showCitySuggestion, setShowCitySuggestion] = useState(false);
    const ref = useOutsideClick(() => setShowTitleSuggestion(false));
+   const filteredOffers = isSuccess ? filterData(searchTerm, allOffers) : [];
 
    const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
       const inputValue = e.target.value;
@@ -76,8 +77,8 @@ const Offers = () => {
    }
 
    return (
-      <section className="flex flex-col w-[877px] h-screen p-10 bg-gray-lightest gap-[56px]">
-         <div className="flex gap-3 " ref={ref}>
+      <section className=" w-[877px] h-screen p-10 bg-gray-lightest gap-[56px]">
+         <div className="flex gap-3 mb-6" ref={ref}>
             <SearchWrapper>
                <SearchInput
                   variant={SearchVariant.TITLE}
@@ -122,7 +123,17 @@ const Offers = () => {
                )}
             </SearchWrapper>
          </div>
-         {isSuccess && <OffersList offers={filterData(searchTerm, allOffers)} />}
+         {filteredOffers.length > 0 && (searchTerm.city !== '' || searchTerm.title !== '') && (
+            <div className="flex items-center gap-4 mb-4">
+               <p className="text-sb-16 text-gray-darkest tracking-tighter">
+                  {filteredOffers.length} offers found{' '}
+                  {searchTerm.title !== '' && `for "${searchTerm.title}"`}{' '}
+                  {searchTerm.city !== '' && `in "${searchTerm.city}"`}
+               </p>
+               <button className="w-[95] p-2 text-accent-strong text-md-12">Clear search</button>
+            </div>
+         )}
+         <OffersList offers={filteredOffers} />
       </section>
    );
 };
