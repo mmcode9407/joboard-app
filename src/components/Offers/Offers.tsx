@@ -71,71 +71,77 @@ const Offers = () => {
       setShowCitySuggestion(false);
    };
 
-   if (isError) {
-      console.error(error);
-      return null;
-   }
+const clearSearch = () => {
+   setSearchTerm({ title: '', city: '' });
+};
 
-   return (
-      <section className=" w-[877px] h-screen p-10 bg-gray-lightest gap-[56px]">
-         <div className="flex gap-3 mb-6" ref={ref}>
-            <SearchWrapper>
-               <SearchInput
-                  variant={SearchVariant.TITLE}
-                  placeholder="Search for"
-                  value={searchTerm}
-                  onChange={handleTitleChange}
-                  onFocus={() => setShowTitleSuggestion(true)}
-               />
-               {showTitleSuggestion && titleSuggestions.length > 0 && (
-                  <ul className="absolute top-full translate-y-[2px] left-0 w-full max-h-[188px] flex flex-col shadow-checkboxShadow overflow-y-auto hiddenScrollbar">
-                     {titleSuggestions.map(offer => (
-                        <li
-                           className="flex justify-between items-center px-4 py-3 border border-gray-light bg-white text-gray-dark cursor-pointer"
-                           key={offer._id}
-                           onClick={() => suggestionTitleClick(offer.title)}>
-                           {highlightText(offer.title, searchTerm.title)}
-                           <p className="text-reg-12 ">{offer.companyName}</p>
-                        </li>
-                     ))}
-                  </ul>
-               )}
-            </SearchWrapper>
-            <SearchWrapper>
-               <SearchInput
-                  variant={SearchVariant.CITY}
-                  placeholder="Search location"
-                  value={searchTerm}
-                  onChange={handleCityChange}
-                  onFocus={() => setShowCitySuggestion(true)}
-               />
-               {showCitySuggestion && citySuggestions.length > 0 && (
-                  <ul className="absolute top-full translate-y-[2px] left-0 w-full max-h-[188px] flex flex-col shadow-checkboxShadow overflow-y-auto hiddenScrollbar">
-                     {citySuggestions.map(offer => (
-                        <li
-                           className="flex justify-between items-center px-4 py-3 border border-gray-light bg-white text-gray-dark cursor-pointer"
-                           key={offer._id}
-                           onClick={() => suggestionCityClick(offer.city)}>
-                           {highlightText(offer.city, searchTerm.city)}
-                        </li>
-                     ))}
-                  </ul>
-               )}
-            </SearchWrapper>
+if (isError) {
+   console.error(error);
+   return null;
+}
+
+return (
+   <section className=" w-[877px] h-screen p-10 bg-gray-lightest gap-[56px]">
+      <div className="flex gap-3 mb-6" ref={ref}>
+         <SearchWrapper>
+            <SearchInput
+               variant={SearchVariant.TITLE}
+               placeholder="Search for"
+               value={searchTerm}
+               onChange={handleTitleChange}
+               onFocus={() => setShowTitleSuggestion(true)}
+            />
+            {showTitleSuggestion && titleSuggestions.length > 0 && (
+               <ul className="absolute top-full translate-y-[2px] left-0 w-full max-h-[188px] flex flex-col shadow-checkboxShadow overflow-y-auto hiddenScrollbar">
+                  {titleSuggestions.map(offer => (
+                     <li
+                        className="flex justify-between items-center px-4 py-3 border border-gray-light bg-white text-gray-dark cursor-pointer"
+                        key={offer._id}
+                        onClick={() => suggestionTitleClick(offer.title)}>
+                        {highlightText(offer.title, searchTerm.title)}
+                        <p className="text-reg-12 ">{offer.companyName}</p>
+                     </li>
+                  ))}
+               </ul>
+            )}
+         </SearchWrapper>
+         <SearchWrapper>
+            <SearchInput
+               variant={SearchVariant.CITY}
+               placeholder="Search location"
+               value={searchTerm}
+               onChange={handleCityChange}
+               onFocus={() => setShowCitySuggestion(true)}
+            />
+            {showCitySuggestion && citySuggestions.length > 0 && (
+               <ul className="absolute top-full translate-y-[2px] left-0 w-full max-h-[188px] flex flex-col shadow-checkboxShadow overflow-y-auto hiddenScrollbar">
+                  {citySuggestions.map(offer => (
+                     <li
+                        className="flex justify-between items-center px-4 py-3 border border-gray-light bg-white text-gray-dark cursor-pointer"
+                        key={offer._id}
+                        onClick={() => suggestionCityClick(offer.city)}>
+                        {highlightText(offer.city, searchTerm.city)}
+                     </li>
+                  ))}
+               </ul>
+            )}
+         </SearchWrapper>
+      </div>
+      {filteredOffers.length > 0 && (searchTerm.city !== '' || searchTerm.title !== '') && (
+         <div className="flex items-center gap-4 mb-4">
+            <p className="text-sb-16 text-gray-darkest tracking-tighter">
+               {filteredOffers.length} offers found{' '}
+               {searchTerm.title !== '' && `for "${searchTerm.title}"`}{' '}
+               {searchTerm.city !== '' && `in "${searchTerm.city}"`}
+            </p>
+            <button className="w-[95] p-2 text-accent-strong text-md-12" onClick={clearSearch}>
+               Clear search
+            </button>
          </div>
-         {filteredOffers.length > 0 && (searchTerm.city !== '' || searchTerm.title !== '') && (
-            <div className="flex items-center gap-4 mb-4">
-               <p className="text-sb-16 text-gray-darkest tracking-tighter">
-                  {filteredOffers.length} offers found{' '}
-                  {searchTerm.title !== '' && `for "${searchTerm.title}"`}{' '}
-                  {searchTerm.city !== '' && `in "${searchTerm.city}"`}
-               </p>
-               <button className="w-[95] p-2 text-accent-strong text-md-12">Clear search</button>
-            </div>
-         )}
-         <OffersList offers={filteredOffers} />
-      </section>
-   );
+      )}
+      <OffersList offers={filteredOffers} />
+   </section>
+);
 };
 
 export default Offers;
