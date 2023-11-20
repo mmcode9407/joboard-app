@@ -10,8 +10,9 @@ import SearchWrapper from '../SearchWrapper/SearchWrapper';
 export const filterData = (searchTerm: SearchTerm, data: Offer[]) => {
    return data.filter(offer => {
       const titleMatch = offer.title.toLowerCase().includes(searchTerm.title.toLowerCase());
+      const cityMatch = offer.city.toLowerCase().includes(searchTerm.city.toLowerCase());
 
-      return titleMatch;
+      return titleMatch && cityMatch;
    });
 };
 
@@ -21,6 +22,8 @@ const Offers = () => {
 
    const [titleSuggestions, setTitleSuggestions] = useState<Offer[]>([]);
    const [showTitleSuggestion, setShowTitleSuggestion] = useState(false);
+   const [citySuggestions, setCitySuggestions] = useState<Offer[]>([]);
+   const [showCitySuggestion, setShowCitySuggestion] = useState(false);
    const ref = useOutsideClick(() => setShowTitleSuggestion(false));
 
    const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -37,10 +40,34 @@ const Offers = () => {
       setTitleSuggestions(titleSuggestions);
    };
 
-   const suggestionClick = (title: string) => {
-      setSearchTerm({ ...searchTerm, title: title });
+   const handleCityChange = (e: ChangeEvent<HTMLInputElement>) => {
+      const inputValue = e.target.value;
+      setSearchTerm({ ...searchTerm, city: inputValue });
+
+      const citySuggestions =
+         (inputValue !== '' &&
+            allOffers?.filter(offer =>
+               offer.city.toLowerCase().includes(inputValue.toLowerCase()),
+            )) ||
+         [];
+
+      setCitySuggestions(citySuggestions);
+   };
+
+   const suggestionTitleClick = (value: string) => {
+      setSearchTerm({ ...searchTerm, title: value });
       setTitleSuggestions([]);
+      setCitySuggestions([]);
       setShowTitleSuggestion(false);
+      setShowCitySuggestion(false);
+   };
+
+   const suggestionCityClick = (value: string) => {
+      setSearchTerm({ ...searchTerm, city: value });
+      setTitleSuggestions([]);
+      setCitySuggestions([]);
+      setShowTitleSuggestion(false);
+      setShowCitySuggestion(false);
    };
 
    if (isError) {
@@ -65,9 +92,30 @@ const Offers = () => {
                         <li
                            className="flex justify-between items-center px-4 py-3 border border-gray-light bg-white text-gray-dark cursor-pointer"
                            key={offer._id}
-                           onClick={() => suggestionClick(offer.title)}>
+                           onClick={() => suggestionTitleClick(offer.title)}>
                            {highlightText(offer.title, searchTerm.title)}
                            <p className="text-reg-12 ">{offer.companyName}</p>
+                        </li>
+                     ))}
+                  </ul>
+               )}
+            </SearchWrapper>
+            <SearchWrapper>
+               <SearchInput
+                  variant={SearchVariant.CITY}
+                  placeholder="Search location"
+                  value={searchTerm}
+                  onChange={handleCityChange}
+                  onFocus={() => setShowCitySuggestion(true)}
+               />
+               {showCitySuggestion && citySuggestions.length > 0 && (
+                  <ul className="absolute top-full translate-y-[2px] left-0 w-full max-h-[188px] flex flex-col shadow-checkboxShadow overflow-y-auto hiddenScrollbar">
+                     {citySuggestions.map(offer => (
+                        <li
+                           className="flex justify-between items-center px-4 py-3 border border-gray-light bg-white text-gray-dark cursor-pointer"
+                           key={offer._id}
+                           onClick={() => suggestionCityClick(offer.city)}>
+                           {highlightText(offer.city, searchTerm.city)}
                         </li>
                      ))}
                   </ul>
