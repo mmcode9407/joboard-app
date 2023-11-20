@@ -20,6 +20,15 @@ enum Location {
    ON_SITE = 'On-site',
 }
 
+export enum SearchVariant {
+   TITLE = 'title',
+   CITY = 'city',
+}
+
+export type SearchTerm = {
+   [key in SearchVariant]: string;
+};
+
 export interface Offer {
    _id: string;
    city: string;
