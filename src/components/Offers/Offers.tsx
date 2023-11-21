@@ -6,10 +6,10 @@ import { useOffers } from '../../hooks/useOffers';
 import { useOutsideClick } from '../../hooks/useOutsideClick';
 import { removeDuplicates } from '../../utils/removeDuplicates';
 import { filterData } from '../../utils/filterData';
-import { highlightText } from '../../utils/highlightText';
 
 import { Offer, SearchSuggestionsShow, SearchTerm, SearchVariant } from '../../types/types';
 import { initSearchSuggestionsState, initSearchTerm } from './initialData/initialData';
+import SuggestionsList from '../SuggestionsList/SuggestionsList';
 
 const Offers = () => {
    const { data: allOffers, isSuccess, isError, error } = useOffers();
@@ -81,18 +81,13 @@ const Offers = () => {
                   onChange={handleInputChange}
                   onFocus={handleInputFocus}
                />
-               {showSuggestions.title && suggestions.length > 0 && (
-                  <ul className="absolute top-full translate-y-[2px] left-0 w-full max-h-[188px] flex flex-col shadow-checkboxShadow overflow-y-auto hiddenScrollbar">
-                     {suggestions.map(offer => (
-                        <li
-                           className="flex justify-between items-center px-4 py-3 border border-gray-light bg-white text-gray-dark cursor-pointer"
-                           key={offer._id}
-                           onClick={() => handleSuggestionClick(offer.title, SearchVariant.TITLE)}>
-                           {highlightText(offer.title, SearchVariant.TITLE)}
-                           <p className="text-reg-12 ">{offer.companyName}</p>
-                        </li>
-                     ))}
-                  </ul>
+               {showSuggestions[SearchVariant.TITLE] && suggestions.length > 0 && (
+                  <SuggestionsList
+                     suggestions={suggestions}
+                     variant={SearchVariant.TITLE}
+                     searchTerm={searchTerm[SearchVariant.TITLE]}
+                     handleSuggestionClick={handleSuggestionClick}
+                  />
                )}
             </SearchWrapper>
             <SearchWrapper>
@@ -103,17 +98,13 @@ const Offers = () => {
                   onChange={handleInputChange}
                   onFocus={handleInputFocus}
                />
-               {showSuggestions.city && suggestions.length > 0 && (
-                  <ul className="absolute top-full translate-y-[2px] left-0 w-full max-h-[188px] flex flex-col shadow-checkboxShadow overflow-y-auto hiddenScrollbar">
-                     {suggestions.map(offer => (
-                        <li
-                           className="flex justify-between items-center px-4 py-3 border border-gray-light bg-white text-gray-dark cursor-pointer"
-                           key={offer._id}
-                           onClick={() => handleSuggestionClick(offer.city, SearchVariant.CITY)}>
-                           {highlightText(offer.city, SearchVariant.CITY)}
-                        </li>
-                     ))}
-                  </ul>
+               {showSuggestions[SearchVariant.CITY] && suggestions.length > 0 && (
+                  <SuggestionsList
+                     suggestions={suggestions}
+                     variant={SearchVariant.CITY}
+                     searchTerm={searchTerm[SearchVariant.CITY]}
+                     handleSuggestionClick={handleSuggestionClick}
+                  />
                )}
             </SearchWrapper>
          </div>
