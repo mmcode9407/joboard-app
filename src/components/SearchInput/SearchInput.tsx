@@ -1,4 +1,4 @@
-﻿import React, { ChangeEvent } from 'react';
+﻿import React, { ChangeEvent, FocusEvent } from 'react';
 import SearchIcon from '../../icons/SearchIcon';
 import LocationIcon from '../../icons/LocationIcon';
 import { SearchTerm, SearchVariant } from '../../types/types';
@@ -8,7 +8,7 @@ interface SearchInput {
    placeholder: string;
    onChange: (e: ChangeEvent<HTMLInputElement>) => void;
    value: SearchTerm;
-   onFocus: () => void;
+   onFocus: (e: FocusEvent<HTMLInputElement>) => void;
 }
 
 const SearchInput = ({ variant, placeholder, value, onChange, onFocus }: SearchInput) => {

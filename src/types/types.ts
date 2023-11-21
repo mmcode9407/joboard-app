@@ -29,6 +29,10 @@ export type SearchTerm = {
    [key in SearchVariant]: string;
 };
 
+export type SearchSuggestionsShow = {
+   [key in SearchVariant]: boolean;
+};
+
 export interface Offer {
    _id: string;
    city: string;
