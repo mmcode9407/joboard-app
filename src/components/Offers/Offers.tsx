@@ -9,21 +9,18 @@ import { filterData } from '../../utils/filterData';
 import { highlightText } from '../../utils/highlightText';
 
 import { Offer, SearchSuggestionsShow, SearchTerm, SearchVariant } from '../../types/types';
+import { initSearchSuggestionsState, initSearchTerm } from './initialData/initialData';
 
 const Offers = () => {
    const { data: allOffers, isSuccess, isError, error } = useOffers();
-   const [searchTerm, setSearchTerm] = useState<SearchTerm>({ title: '', city: '' });
+   const [searchTerm, setSearchTerm] = useState<SearchTerm>(initSearchTerm);
    const [suggestions, setSuggestions] = useState<Offer[]>([]);
-   const [showSuggestions, setShowSuggestions] = useState<SearchSuggestionsShow>({
-      title: false,
-      city: false,
-   });
+   const [showSuggestions, setShowSuggestions] = useState<SearchSuggestionsShow>(
+      initSearchSuggestionsState,
+   );
 
    const ref = useOutsideClick(() => {
-      setShowSuggestions({
-         title: false,
-         city: false,
-      });
+      setShowSuggestions(initSearchSuggestionsState);
       setSuggestions([]);
    });
    const filteredOffers = isSuccess ? filterData(searchTerm, allOffers) : [];
@@ -59,15 +56,12 @@ const Offers = () => {
    };
 
    const clearSearch = () => {
-      setSearchTerm({ title: '', city: '' });
+      setSearchTerm(initSearchTerm);
    };
 
    const handleSuggestionClick = (value: string, variant: SearchVariant) => {
       setSearchTerm({ ...searchTerm, [variant]: value });
-      setShowSuggestions({
-         title: false,
-         city: false,
-      });
+      setShowSuggestions(initSearchSuggestionsState);
       setSuggestions([]);
    };
 
