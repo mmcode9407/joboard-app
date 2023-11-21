@@ -2,6 +2,8 @@
 import OffersList from '../OffersList/OffersList';
 import SearchInput from '../SearchInput/SearchInput';
 import SearchWrapper from '../SearchWrapper/SearchWrapper';
+import SuggestionsList from '../SuggestionsList/SuggestionsList';
+import ResultsInfo from '../ResultsInfo/ResultsInfo';
 import { useOffers } from '../../hooks/useOffers';
 import { useOutsideClick } from '../../hooks/useOutsideClick';
 import { removeDuplicates } from '../../utils/removeDuplicates';
@@ -9,7 +11,6 @@ import { filterData } from '../../utils/filterData';
 
 import { Offer, SearchSuggestionsShow, SearchTerm, SearchVariant } from '../../types/types';
 import { initSearchSuggestionsState, initSearchTerm } from './initialData/initialData';
-import SuggestionsList from '../SuggestionsList/SuggestionsList';
 
 const Offers = () => {
    const { data: allOffers, isSuccess, isError, error } = useOffers();
@@ -108,18 +109,14 @@ const Offers = () => {
                )}
             </SearchWrapper>
          </div>
-         {filteredOffers.length > 0 && (searchTerm.city !== '' || searchTerm.title !== '') && (
-            <div className="flex items-center gap-4 mb-4">
-               <p className="text-sb-16 text-gray-darkest tracking-tighter">
-                  {filteredOffers.length} offers found{' '}
-                  {searchTerm.title !== '' && `for "${searchTerm.title}"`}{' '}
-                  {searchTerm.city !== '' && `in "${searchTerm.city}"`}
-               </p>
-               <button className="w-[95] p-2 text-accent-strong text-md-12" onClick={clearSearch}>
-                  Clear search
-               </button>
-            </div>
-         )}
+         {filteredOffers.length >= 0 &&
+            (searchTerm[SearchVariant.TITLE] !== '' || searchTerm[SearchVariant.CITY] !== '') && (
+               <ResultsInfo
+                  qty={filteredOffers.length}
+                  searchTerm={searchTerm}
+                  clear={clearSearch}
+               />
+            )}
          <OffersList offers={filteredOffers} />
       </section>
    );
