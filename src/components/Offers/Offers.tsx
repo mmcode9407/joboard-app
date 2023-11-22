@@ -1,46 +1,70 @@
-﻿import React, { ChangeEvent, useState } from 'react';
+﻿import React, { ChangeEvent, FocusEvent, useState } from 'react';
 import OffersList from '../OffersList/OffersList';
-import { Offer, SearchTerm, SearchVariant } from '../../types/types';
-import { useOffers } from '../../hooks/useOffers';
-import { highlightText } from '../../utils/highlightText';
-import { useOutsideClick } from '../../hooks/useOutsideClick';
 import SearchInput from '../SearchInput/SearchInput';
 import SearchWrapper from '../SearchWrapper/SearchWrapper';
+import SuggestionsList from '../SuggestionsList/SuggestionsList';
+import ResultsInfo from '../ResultsInfo/ResultsInfo';
+import { useOffers } from '../../data/offers/useOffers';
+import { useOutsideClick } from '../../hooks/useOutsideClick';
+import { removeDuplicates } from '../../utils/removeDuplicates';
+import { filterData } from '../../utils/filterData';
 
-export const filterData = (searchTerm: SearchTerm, data: Offer[]) => {
-   return data.filter(offer => {
-      const titleMatch = offer.title.toLowerCase().includes(searchTerm.title.toLowerCase());
-
-      return titleMatch;
-   });
-};
+import { Offer, SearchSuggestionsShow, SearchTerm, SearchVariant } from '../../types/types';
+import { initSearchSuggestionsState, initSearchTerm } from './initialData/initialData';
 
 const Offers = () => {
-   const [searchTerm, setSearchTerm] = useState<SearchTerm>({ title: '', city: '' });
    const { data: allOffers, isSuccess, isError, error } = useOffers();
+   const [searchTerm, setSearchTerm] = useState<SearchTerm>(initSearchTerm);
+   const [suggestions, setSuggestions] = useState<Offer[]>([]);
+   const [showSuggestions, setShowSuggestions] = useState<SearchSuggestionsShow>(
+      initSearchSuggestionsState,
+   );
 
-   const [titleSuggestions, setTitleSuggestions] = useState<Offer[]>([]);
-   const [showTitleSuggestion, setShowTitleSuggestion] = useState(false);
-   const ref = useOutsideClick(() => setShowTitleSuggestion(false));
+   const ref = useOutsideClick(() => {
+      setShowSuggestions(initSearchSuggestionsState);
+      setSuggestions([]);
+   });
+   const filteredOffers = isSuccess ? filterData(searchTerm, allOffers) : [];
+   const isAnySuggestion = suggestions.length > 0;
 
-   const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
+   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
       const inputValue = e.target.value;
-      setSearchTerm({ ...searchTerm, title: inputValue });
+      const inputName = e.target.name as SearchVariant;
 
-      const titleSuggestions =
-         (inputValue !== '' &&
+      setSearchTerm({ ...searchTerm, [inputName]: inputValue });
+      settingSuggestions(inputValue, inputName);
+   };
+
+   const handleInputFocus = (e: FocusEvent<HTMLInputElement>) => {
+      const inputName = e.target.name as SearchVariant;
+
+      setShowSuggestions({
+         ...showSuggestions,
+         [SearchVariant.TITLE]: inputName === SearchVariant.TITLE,
+         [SearchVariant.CITY]: inputName === SearchVariant.CITY,
+      });
+      settingSuggestions(searchTerm[inputName], inputName);
+   };
+
+   const settingSuggestions = (term: string, variant: SearchVariant) => {
+      const suggestions =
+         (term !== '' &&
             allOffers?.filter(offer =>
-               offer.title.toLowerCase().includes(inputValue.toLowerCase()),
+               offer[variant].toLowerCase().includes(term.toLowerCase()),
             )) ||
          [];
 
-      setTitleSuggestions(titleSuggestions);
+      setSuggestions(removeDuplicates(suggestions, variant));
    };
 
-   const suggestionClick = (title: string) => {
-      setSearchTerm({ ...searchTerm, title: title });
-      setTitleSuggestions([]);
-      setShowTitleSuggestion(false);
+   const clearSearch = () => {
+      setSearchTerm(initSearchTerm);
+   };
+
+   const handleSuggestionClick = (value: string, variant: SearchVariant) => {
+      setSearchTerm({ ...searchTerm, [variant]: value });
+      setShowSuggestions(initSearchSuggestionsState);
+      setSuggestions([]);
    };
 
    if (isError) {
@@ -49,32 +73,52 @@ const Offers = () => {
    }
 
    return (
-      <section className="flex flex-col w-[877px] h-screen p-10 bg-gray-lightest gap-[56px]">
-         <div className="flex gap-3 " ref={ref}>
+      <section className=" w-[877px] h-screen p-10 bg-gray-lightest gap-[56px]">
+         <div className="flex gap-3 mb-6" ref={ref}>
             <SearchWrapper>
                <SearchInput
                   variant={SearchVariant.TITLE}
                   placeholder="Search for"
                   value={searchTerm}
-                  onChange={handleTitleChange}
-                  onFocus={() => setShowTitleSuggestion(true)}
+                  onChange={handleInputChange}
+                  onFocus={handleInputFocus}
                />
-               {showTitleSuggestion && titleSuggestions.length > 0 && (
-                  <ul className="absolute top-full translate-y-[2px] left-0 w-full max-h-[188px] flex flex-col shadow-checkboxShadow overflow-y-auto hiddenScrollbar">
-                     {titleSuggestions.map(offer => (
-                        <li
-                           className="flex justify-between items-center px-4 py-3 border border-gray-light bg-white text-gray-dark cursor-pointer"
-                           key={offer._id}
-                           onClick={() => suggestionClick(offer.title)}>
-                           {highlightText(offer.title, searchTerm.title)}
-                           <p className="text-reg-12 ">{offer.companyName}</p>
-                        </li>
-                     ))}
-                  </ul>
+               {showSuggestions[SearchVariant.TITLE] && isAnySuggestion && (
+                  <SuggestionsList
+                     suggestions={suggestions}
+                     variant={SearchVariant.TITLE}
+                     searchTerm={searchTerm[SearchVariant.TITLE]}
+                     handleSuggestionClick={handleSuggestionClick}
+                  />
+               )}
+            </SearchWrapper>
+            <SearchWrapper>
+               <SearchInput
+                  variant={SearchVariant.CITY}
+                  placeholder="Search location"
+                  value={searchTerm}
+                  onChange={handleInputChange}
+                  onFocus={handleInputFocus}
+               />
+               {showSuggestions[SearchVariant.CITY] && isAnySuggestion && (
+                  <SuggestionsList
+                     suggestions={suggestions}
+                     variant={SearchVariant.CITY}
+                     searchTerm={searchTerm[SearchVariant.CITY]}
+                     handleSuggestionClick={handleSuggestionClick}
+                  />
                )}
             </SearchWrapper>
          </div>
-         {isSuccess && <OffersList offers={filterData(searchTerm, allOffers)} />}
+         {filteredOffers.length >= 0 &&
+            (!!searchTerm[SearchVariant.TITLE] || !!searchTerm[SearchVariant.CITY]) && (
+               <ResultsInfo
+                  qty={filteredOffers.length}
+                  searchTerm={searchTerm}
+                  clear={clearSearch}
+               />
+            )}
+         <OffersList offers={filteredOffers} />
       </section>
    );
 };

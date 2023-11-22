@@ -14,5 +14,5 @@ li {
 }
 
 .hiddenScrollbar::-webkit-scrollbar {
-   @apply hidden
+   @apply hidden;
 }
