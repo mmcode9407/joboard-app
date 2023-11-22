@@ -4,7 +4,7 @@ import SearchInput from '../SearchInput/SearchInput';
 import SearchWrapper from '../SearchWrapper/SearchWrapper';
 import SuggestionsList from '../SuggestionsList/SuggestionsList';
 import ResultsInfo from '../ResultsInfo/ResultsInfo';
-import { useOffers } from '../../hooks/useOffers';
+import { useOffers } from '../../data/offers/useOffers';
 import { useOutsideClick } from '../../hooks/useOutsideClick';
 import { removeDuplicates } from '../../utils/removeDuplicates';
 import { filterData } from '../../utils/filterData';
@@ -25,6 +25,7 @@ const Offers = () => {
       setSuggestions([]);
    });
    const filteredOffers = isSuccess ? filterData(searchTerm, allOffers) : [];
+   const isAnySuggestion = suggestions.length > 0;
 
    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
       const inputValue = e.target.value;
@@ -82,7 +83,7 @@ const Offers = () => {
                   onChange={handleInputChange}
                   onFocus={handleInputFocus}
                />
-               {showSuggestions[SearchVariant.TITLE] && suggestions.length > 0 && (
+               {showSuggestions[SearchVariant.TITLE] && isAnySuggestion && (
                   <SuggestionsList
                      suggestions={suggestions}
                      variant={SearchVariant.TITLE}
@@ -99,7 +100,7 @@ const Offers = () => {
                   onChange={handleInputChange}
                   onFocus={handleInputFocus}
                />
-               {showSuggestions[SearchVariant.CITY] && suggestions.length > 0 && (
+               {showSuggestions[SearchVariant.CITY] && isAnySuggestion && (
                   <SuggestionsList
                      suggestions={suggestions}
                      variant={SearchVariant.CITY}
@@ -110,7 +111,7 @@ const Offers = () => {
             </SearchWrapper>
          </div>
          {filteredOffers.length >= 0 &&
-            (searchTerm[SearchVariant.TITLE] !== '' || searchTerm[SearchVariant.CITY] !== '') && (
+            (!!searchTerm[SearchVariant.TITLE] || !!searchTerm[SearchVariant.CITY]) && (
                <ResultsInfo
                   qty={filteredOffers.length}
                   searchTerm={searchTerm}
