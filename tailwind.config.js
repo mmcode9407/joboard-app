@@ -18,6 +18,7 @@ export default {
          'gray-darkest': '#212121',
          'accent-strong': '#552882',
          white: '#FFFFFF',
+         black: '#000000',
       },
       fontSize: {
          'sb-28': ['28px', { fontWeight: '600' }],

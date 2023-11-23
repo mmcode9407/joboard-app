@@ -73,8 +73,11 @@ const Offers = () => {
    }
 
    return (
-      <section className=" w-[877px] h-screen p-10 bg-gray-lightest gap-[56px]">
-         <div className="flex gap-3 mb-6" ref={ref}>
+      <section className="relative flex flex-col grow lg:max-w-[877px] p-4 md:p-10 bg-gray-lightest overflow-y-auto">
+         {isAnySuggestion && (
+            <div className="absolute top-0 left-0 w-full h-full bg-black opacity-20"></div>
+         )}
+         <div className="flex flex-col md:flex-row gap-3 mb-6" ref={ref}>
             <SearchWrapper>
                <SearchInput
                   variant={SearchVariant.TITLE}
