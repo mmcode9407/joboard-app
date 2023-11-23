@@ -1,6 +1,6 @@
 ﻿import React, { ChangeEvent, FocusEvent } from 'react';
-import SearchIcon from '../../icons/SearchIcon';
-import LocationIcon from '../../icons/LocationIcon';
+import SearchIcon from '../../Icons/SearchIcon';
+import LocationIcon from '../../Icons/LocationIcon';
 import { SearchTerm, SearchVariant } from '../../types/types';
 
 interface SearchInput {
