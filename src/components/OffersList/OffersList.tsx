@@ -4,7 +4,7 @@ import { Offer } from '../../types/types';
 
 const OffersList = ({ offers }: { offers: Offer[] }) => {
    return (
-      <ul className="flex flex-col gap-2 h-full overflow-y-auto">
+      <ul className="flex flex-col gap-2 overflow-y-auto">
          {offers.map(offer => (
             <OffersListItem key={offer._id} offer={offer} />
          ))}

@@ -9,7 +9,7 @@ interface ResultsInfoProps {
 
 const ResultsInfo = ({ qty, searchTerm, clear }: ResultsInfoProps) => {
    return (
-      <div className="flex items-center gap-4 mb-4">
+      <div className="flex items-center gap-1 md:gap-4 mb-4">
          <p className="text-sb-16 text-gray-darkest tracking-tighter">
             {qty} offers found{' '}
             {searchTerm[SearchVariant.TITLE] !== '' && `for "${searchTerm[SearchVariant.TITLE]}"`}{' '}

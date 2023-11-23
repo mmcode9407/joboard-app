@@ -16,7 +16,7 @@ const SuggestionsList = ({
    handleSuggestionClick,
 }: SuggestionsListProps) => {
    return (
-      <ul className="absolute top-full translate-y-[2px] left-0 w-full max-h-[188px] flex flex-col shadow-checkboxShadow overflow-y-auto hiddenScrollbar">
+      <ul className="absolute top-full translate-y-[2px] left-0 w-full max-h-[188px] flex flex-col shadow-checkboxShadow overflow-y-auto hiddenScrollbar z-10">
          {suggestions.map(offer => (
             <li
                className="flex justify-between items-center px-4 py-3 border border-gray-light bg-white text-gray-dark cursor-pointer"

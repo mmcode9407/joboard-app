@@ -26,7 +26,7 @@ const SearchInput = ({ variant, placeholder, value, onChange, onFocus }: SearchI
    return (
       <>
          <input
-            className="w-[287px] h-full text-gray-dark text-md-14 placeholder:text-md-14 placeholder:text-gray-dark outline-none"
+            className="w-full h-full text-gray-dark text-md-14 placeholder:text-md-14 placeholder:text-gray-dark outline-none"
             type="text"
             name={variant}
             placeholder={placeholder}
