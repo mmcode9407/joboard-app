@@ -18,13 +18,17 @@ interface IFiltersContext {
    clearFilters: () => void;
 }
 
+const initialFilters = {
+   [FilterGroup.JOBTYPE]: [],
+};
+
 const FiltersContext = createContext<IFiltersContext | undefined>(undefined);
 
 export const FiltersProvider = ({ children }: PropsWithChildren) => {
-   const [filters, setFilters] = useState<IFilters>({ jobType: [] });
+   const [filters, setFilters] = useState<IFilters>(initialFilters);
 
    const clearFilters = () => {
-      setFilters({ jobType: [] });
+      setFilters(initialFilters);
    };
 
    return (
