@@ -8,7 +8,7 @@
 } from 'react';
 import { FilterGroup, JobType } from '../types/types';
 
-interface IFilters {
+export interface IFilters {
    [FilterGroup.JOBTYPE]: JobType[];
 }
 

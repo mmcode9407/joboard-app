@@ -1,5 +1,5 @@
 ﻿import React from 'react';
-import CheckboxIcon from '../../Icons/CheckboxIcon';
+import CheckboxIcon from '../../icons/CheckboxIcon';
 import { useFilters } from '../../context/FiltersContext';
 import { InputProps } from '../../types/types';
 
