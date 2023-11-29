@@ -1,22 +1,14 @@
 ﻿import React from 'react';
 import CheckboxIcon from '../../icons/CheckboxIcon';
-import { useFilters } from '../../context/FiltersContext';
-import { InputProps } from '../../types/types';
+import { FilterGroup, InputProps, JobType } from '../../types/types';
 
-const CheckboxInput = ({ name, label, group, type }: InputProps) => {
-   const { filters, setFilters } = useFilters();
-   const checked = filters[group].some(el => el === label);
+interface CheckboxProps extends InputProps {
+   onChange: (field: FilterGroup, value: JobType) => void;
+   isFilterExist: (field: FilterGroup, value: JobType) => boolean;
+}
 
-   const onChange = () => {
-      if (!checked) {
-         setFilters({ ...filters, [group]: [...filters[group], label] });
-      } else {
-         setFilters({
-            ...filters,
-            [group]: filters[group].filter(el => el !== label),
-         });
-      }
-   };
+const FilterCheckbox = ({ name, label, group, type, onChange, isFilterExist }: CheckboxProps) => {
+   const checked = isFilterExist(group, label) ? true : false;
 
    return (
       <label
@@ -31,7 +23,7 @@ const CheckboxInput = ({ name, label, group, type }: InputProps) => {
                id={name}
                className="hidden"
                checked={checked}
-               onChange={onChange}
+               onChange={() => onChange(group, label)}
             />
             <CheckboxIcon checked={checked} />
          </div>
@@ -40,4 +32,4 @@ const CheckboxInput = ({ name, label, group, type }: InputProps) => {
    );
 };
 
-export default CheckboxInput;
+export default FilterCheckbox;

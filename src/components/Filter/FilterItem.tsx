@@ -1,6 +1,7 @@
 ﻿import React from 'react';
-import CheckboxInput from '../CheckboxInput/CheckboxInput';
-import { InputProps } from '../../types/types';
+import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
+import { FilterGroup, InputProps, JobType } from '../../types/types';
+import { useFilters } from '../../context/FiltersContext';
 
 interface FilterItemProps {
    title: string;
@@ -8,10 +9,36 @@ interface FilterItemProps {
 }
 
 const FilterItem = ({ inputs, title }: FilterItemProps) => {
+   const { filters, setFilters } = useFilters();
+
    const inputType = {
       checkbox: ({ name, label, checked, group, type }: InputProps) => (
-         <CheckboxInput name={name} label={label} checked={checked} group={group} type={type} />
+         <FilterCheckbox
+            name={name}
+            label={label}
+            checked={checked}
+            group={group}
+            type={type}
+            onChange={changeHandler}
+            isFilterExist={isFilterExist}
+         />
       ),
+   };
+
+   const isFilterExist = (field: FilterGroup, value: JobType) => {
+      return filters[field].some(el => el === value);
+   };
+
+   const changeHandler = (field: FilterGroup, value: JobType) => {
+      const checked = isFilterExist(field, value);
+      if (!checked) {
+         setFilters({ ...filters, [field]: [...filters[field], value] });
+      } else {
+         setFilters({
+            ...filters,
+            [field]: filters[field].filter(el => el !== value),
+         });
+      }
    };
 
    return (
