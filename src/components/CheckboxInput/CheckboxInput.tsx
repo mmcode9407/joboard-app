@@ -19,19 +19,24 @@ const CheckboxInput = ({ name, label, group, type }: InputProps) => {
    };
 
    return (
-      <div className="flex gap-2 items-center">
-         <div
-            className=" flex items-center justify-center cursor-pointer "
-            onClick={() => onChange()}>
-            <input type={type} name={name} id={name} className="hidden" />
+      <label
+         htmlFor={name}
+         className={`flex gap-2 items-center ${
+            checked ? 'text-gray-darkest' : 'text-gray-dark'
+         } text-reg-14`}>
+         <div className=" flex items-center justify-center cursor-pointer ">
+            <input
+               type={type}
+               name={name}
+               id={name}
+               className="hidden"
+               checked={checked}
+               onChange={onChange}
+            />
             <CheckboxIcon checked={checked} />
          </div>
-         <label
-            htmlFor={name}
-            className={`${checked ? 'text-gray-darkest' : 'text-gray-dark'} text-reg-14`}>
-            {label}
-         </label>
-      </div>
+         {label}
+      </label>
    );
 };
 
