@@ -20,17 +20,13 @@ export enum Location {
    ON_SITE = 'On-site',
 }
 
-export type InputType = 'checkbox';
-
 export enum FilterGroup {
    JOBTYPE = 'jobType',
 }
 
-export interface InputProps {
+export interface ICheckboxInput {
    name: string;
    label: JobType;
-   checked?: boolean;
-   type: InputType;
    group: FilterGroup;
 }
 

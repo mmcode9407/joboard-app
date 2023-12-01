@@ -1,7 +1,8 @@
 ﻿import React from 'react';
-import FilterItem from './FilterItem';
-import { filters } from './filters/filters';
+import CheckboxFilterItem from './CheckboxFilterItem';
+import { filterSections } from './filters/filters';
 import { useFilters } from '../../context/FiltersContext';
+import { FilterGroup } from '../../types/types';
 
 export const FilterBox = () => {
    const { clearFilters } = useFilters();
@@ -14,9 +15,11 @@ export const FilterBox = () => {
                Clear filters
             </button>
          </header>
-         {filters.map(({ title, inputs }) => (
-            <FilterItem title={title} inputs={inputs} key={title} />
-         ))}
+         <CheckboxFilterItem
+            title="Job type"
+            section={FilterGroup.JOBTYPE}
+            checkboxes={filterSections.jobType}
+         />
       </div>
    );
 };
