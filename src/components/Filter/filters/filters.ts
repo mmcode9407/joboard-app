@@ -1,8 +1,9 @@
-﻿import { FilterGroup, ICheckboxInput, JobType, Seniority } from '../../../types/types';
+﻿import { FilterGroup, ICheckboxInput, JobType, Location, Seniority } from '../../../types/types';
 
 export interface FilterSections {
    jobType: ICheckboxInput[];
    seniority: ICheckboxInput[];
+   location: ICheckboxInput[];
 }
 
 export const filterSections: FilterSections = {
@@ -58,6 +59,23 @@ export const filterSections: FilterSections = {
          name: 'intern',
          label: Seniority.INTERN,
          group: FilterGroup.SENIORITY,
+      },
+   ],
+   location: [
+      {
+         name: 'remote',
+         label: Location.REMOTE,
+         group: FilterGroup.LOCATION,
+      },
+      {
+         name: 'part-remote',
+         label: Location.PART_REMOTE,
+         group: FilterGroup.LOCATION,
+      },
+      {
+         name: 'on-site',
+         label: Location.ON_SITE,
+         group: FilterGroup.LOCATION,
       },
    ],
 };

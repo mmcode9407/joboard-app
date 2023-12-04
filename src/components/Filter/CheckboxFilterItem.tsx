@@ -3,7 +3,7 @@ import Checkbox from '../Inputs/Checkbox/Checkbox';
 import { FilterGroup, ICheckboxInput, JobType } from '../../types/types';
 import { useFilters } from '../../context/FiltersContext';
 
-type Sections = FilterGroup.JOBTYPE | FilterGroup.SENIORITY;
+type Sections = FilterGroup.JOBTYPE | FilterGroup.SENIORITY | FilterGroup.LOCATION;
 
 interface CheckboxFilterItemProps {
    title: string;
