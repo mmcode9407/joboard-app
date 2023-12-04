@@ -20,6 +20,11 @@ export const FilterBox = () => {
             section={FilterGroup.JOBTYPE}
             checkboxes={filterSections.jobType}
          />
+         <CheckboxFilterItem
+            title="Seniority"
+            section={FilterGroup.SENIORITY}
+            checkboxes={filterSections.seniority}
+         />
       </div>
    );
 };
