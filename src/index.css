@@ -23,5 +23,5 @@ li {
 
 .slider::-webkit-slider-thumb {
    box-shadow: 0 0 0 6px white, 0 0 0 8px #9564d4;
-   @apply appearance-none w-[7px] h-[7px] bg-accent rounded-full cursor-pointer ;
+   @apply appearance-none w-[7px] h-[7px] bg-accent rounded-full cursor-pointer;
 }
