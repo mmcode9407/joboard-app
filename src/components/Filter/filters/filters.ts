@@ -1,9 +1,17 @@
-﻿import { FilterGroup, ICheckboxInput, JobType, Location, Seniority } from '../../../types/types';
+﻿import {
+   FilterGroup,
+   ICheckboxInput,
+   IRangeInput,
+   JobType,
+   Location,
+   Seniority,
+} from '../../../types/types';
 
 export interface FilterSections {
    jobType: ICheckboxInput[];
    seniority: ICheckboxInput[];
    location: ICheckboxInput[];
+   salary: IRangeInput[];
 }
 
 export const filterSections: FilterSections = {
@@ -76,6 +84,12 @@ export const filterSections: FilterSections = {
          name: 'on-site',
          label: Location.ON_SITE,
          group: FilterGroup.LOCATION,
+      },
+   ],
+   salary: [
+      {
+         name: 'salary',
+         group: FilterGroup.SALARY,
       },
    ],
 };

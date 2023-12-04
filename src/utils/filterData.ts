@@ -18,8 +18,14 @@ const filterBySearch = (searchTerm: SearchTerm, offer: Offer) => {
 };
 
 const filterByOthersFilters = (otherFilters: IFilters, offer: Offer) => {
-   return Object.entries(otherFilters).every(([key, values]: [string, string[]]) => {
+   return Object.entries(otherFilters).every(([key, values]) => {
       const field = offer[key as keyof IFilters];
-      return values.length === 0 || values.includes(field);
+      const isFieldNumber = typeof field === 'number';
+
+      if (Array.isArray(values)) {
+         return values.length === 0 || values.includes(field);
+      } else if (typeof values === 'number' && isFieldNumber) {
+         return field >= values;
+      }
    });
 };
