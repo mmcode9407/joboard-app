@@ -13,9 +13,7 @@ const Checkbox = ({ name, label, onChange, isChecked, value }: CheckboxProps) =>
    const [checked, setChecked] = useState(isChecked || false);
 
    useEffect(() => {
-      if (typeof isChecked !== 'undefined') {
-         setChecked(isChecked);
-      }
+      setChecked(!!isChecked);
    }, [isChecked]);
 
    return (
