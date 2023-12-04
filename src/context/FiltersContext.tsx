@@ -6,10 +6,11 @@
    useContext,
    useState,
 } from 'react';
-import { FilterGroup, JobType } from '../types/types';
+import { FilterGroup, JobType, Seniority } from '../types/types';
 
 export interface IFilters {
    [FilterGroup.JOBTYPE]: JobType[];
+   [FilterGroup.SENIORITY]: Seniority[];
 }
 
 interface IFiltersContext {
@@ -20,6 +21,7 @@ interface IFiltersContext {
 
 const initialFilters = {
    [FilterGroup.JOBTYPE]: [],
+   [FilterGroup.SENIORITY]: [],
 };
 
 const FiltersContext = createContext<IFiltersContext | undefined>(undefined);

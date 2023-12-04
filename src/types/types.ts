@@ -22,11 +22,12 @@ export enum Location {
 
 export enum FilterGroup {
    JOBTYPE = 'jobType',
+   SENIORITY = 'seniority',
 }
 
 export interface ICheckboxInput {
    name: string;
-   label: JobType;
+   label: JobType | Seniority;
    group: FilterGroup;
 }
 
