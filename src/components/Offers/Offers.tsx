@@ -11,9 +11,11 @@ import { filterData } from '../../utils/filterData';
 
 import { Offer, SearchSuggestionsShow, SearchTerm, SearchVariant } from '../../types/types';
 import { initSearchSuggestionsState, initSearchTerm } from './initialData/initialData';
+import { useFilters } from '../../context/FiltersContext';
 
 const Offers = () => {
    const { data: allOffers, isSuccess, isError, error } = useOffers();
+   const { filters } = useFilters();
    const [searchTerm, setSearchTerm] = useState<SearchTerm>(initSearchTerm);
    const [suggestions, setSuggestions] = useState<Offer[]>([]);
    const [showSuggestions, setShowSuggestions] = useState<SearchSuggestionsShow>(
@@ -24,7 +26,7 @@ const Offers = () => {
       setShowSuggestions(initSearchSuggestionsState);
       setSuggestions([]);
    });
-   const filteredOffers = isSuccess ? filterData(searchTerm, allOffers) : [];
+   const filteredOffers = isSuccess ? filterData(searchTerm, allOffers, filters) : [];
    const isAnySuggestion = suggestions.length > 0;
 
    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -75,7 +77,7 @@ const Offers = () => {
    return (
       <section className="relative flex flex-col grow lg:max-w-[877px] p-4 md:p-10 bg-gray-lightest overflow-y-auto">
          {isAnySuggestion && (
-            <div className="absolute top-0 left-0 w-full h-full bg-black opacity-20"></div>
+            <div className="md:hidden absolute top-0 left-0 w-full h-full bg-black opacity-20"></div>
          )}
          <div className="flex flex-col md:flex-row gap-3 mb-6" ref={ref}>
             <SearchWrapper>

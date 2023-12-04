@@ -1,11 +1,11 @@
-﻿enum JobType {
+﻿export enum JobType {
    FULLTIME = 'Full-time',
    PARTTIME = 'Part-time',
    CONTRACT = 'Contract',
    FREELANCE = 'Freelance',
 }
 
-enum Seniority {
+export enum Seniority {
    LEAD = 'Lead',
    EXPERT = 'Expert',
    SENIOR = 'Senior',
@@ -14,10 +14,20 @@ enum Seniority {
    INTERN = 'Intern',
 }
 
-enum Location {
+export enum Location {
    REMOTE = 'Remote',
    PART_REMOTE = 'Part-remote',
    ON_SITE = 'On-site',
+}
+
+export enum FilterGroup {
+   JOBTYPE = 'jobType',
+}
+
+export interface ICheckboxInput {
+   name: string;
+   label: JobType;
+   group: FilterGroup;
 }
 
 export enum SearchVariant {
