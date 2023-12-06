@@ -38,6 +38,7 @@ const CheckboxFilterItem = ({ checkboxes, title, section }: CheckboxFilterItemPr
                const { name, label } = checkbox;
                return (
                   <Checkbox
+                     key={name}
                      name={name}
                      label={label}
                      value={label}

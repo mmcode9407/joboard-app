@@ -1,25 +1,31 @@
 ﻿import { IFilters } from '../context/FiltersContext';
 import { Offer, SearchTerm } from '../types/types';
 
-export const filterData = (searchTerm: SearchTerm, data: Offer[], otherFilters?: IFilters) => {
-   return data.filter(offer => {
-      const searchMatch = filterBySearch(searchTerm, offer);
-      const otherMatchers = otherFilters ? filterByOthersFilters(otherFilters, offer) : true;
-
-      return searchMatch && otherMatchers;
-   });
+export const filterOffers = (searchTerm: SearchTerm, offers: Offer[], otherFilters: IFilters) => {
+   return offers
+      .filter(filterByTitle(searchTerm.title))
+      .filter(filterByCity(searchTerm.city))
+      .filter(filterByJobType(otherFilters.jobType))
+      .filter(filterBySeniority(otherFilters.seniority))
+      .filter(filterByLocation(otherFilters.workLocation))
+      .filter(filterBySalary(otherFilters.salaryFrom));
 };
 
-const filterBySearch = (searchTerm: SearchTerm, offer: Offer) => {
-   return Object.entries(searchTerm).every(([key, value]) => {
-      const field = offer[key as keyof SearchTerm].toLowerCase();
-      return value === '' || field.includes(value.toLowerCase());
-   });
+const filterByTitle = (title: string) => {
+   return (offer: Offer) => !title || offer.title.toLowerCase().includes(title.toLowerCase());
 };
-
-const filterByOthersFilters = (otherFilters: IFilters, offer: Offer) => {
-   return Object.entries(otherFilters).every(([key, values]: [string, string[]]) => {
-      const field = offer[key as keyof IFilters];
-      return values.length === 0 || values.includes(field);
-   });
+const filterByCity = (city: string) => {
+   return (offer: Offer) => !city || offer.city.toLowerCase().includes(city.toLowerCase());
+};
+const filterByJobType = (jobType: string[]) => {
+   return (offer: Offer) => !jobType.length || jobType.includes(offer.jobType);
+};
+const filterBySeniority = (seniority: string[]) => {
+   return (offer: Offer) => !seniority.length || seniority.includes(offer.seniority);
+};
+const filterByLocation = (location: string[]) => {
+   return (offer: Offer) => !location.length || location.includes(offer.workLocation);
+};
+const filterBySalary = (salaryFrom: number) => {
+   return (offer: Offer) => salaryFrom === 0 || salaryFrom >= offer.salaryFrom;
 };

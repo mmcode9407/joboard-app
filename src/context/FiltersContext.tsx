@@ -12,6 +12,7 @@ export interface IFilters {
    [FilterGroup.JOBTYPE]: JobType[];
    [FilterGroup.SENIORITY]: Seniority[];
    [FilterGroup.LOCATION]: Location[];
+   [FilterGroup.SALARY]: number;
 }
 
 interface IFiltersContext {
@@ -24,6 +25,7 @@ const initialFilters = {
    [FilterGroup.JOBTYPE]: [],
    [FilterGroup.SENIORITY]: [],
    [FilterGroup.LOCATION]: [],
+   [FilterGroup.SALARY]: 0,
 };
 
 const FiltersContext = createContext<IFiltersContext | undefined>(undefined);

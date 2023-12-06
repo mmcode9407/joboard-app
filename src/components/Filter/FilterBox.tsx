@@ -2,6 +2,7 @@
 import CheckboxFilterItem from './CheckboxFilterItem';
 import { filterSections } from './filters/filters';
 import { FilterGroup } from '../../types/types';
+import RangeFilterItem from './RangeFilterItem';
 
 export const FilterBox = () => {
    return (
@@ -24,6 +25,11 @@ export const FilterBox = () => {
             title="Location"
             section={FilterGroup.LOCATION}
             checkboxes={filterSections.location}
+         />
+         <RangeFilterItem
+            title="Salary (min.)"
+            section={FilterGroup.SALARY}
+            input={filterSections.salary}
          />
       </div>
    );
