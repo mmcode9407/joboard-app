@@ -7,7 +7,7 @@ import ResultsInfo from '../ResultsInfo/ResultsInfo';
 import { useOffers } from '../../data/offers/useOffers';
 import { useOutsideClick } from '../../hooks/useOutsideClick';
 import { removeDuplicates } from '../../utils/removeDuplicates';
-import { filterData } from '../../utils/filterData';
+import { filterOffers } from '../../utils/filterData';
 
 import { Offer, SearchSuggestionsShow, SearchTerm, SearchVariant } from '../../types/types';
 import { initSearchSuggestionsState, initSearchTerm } from './initialData/initialData';
@@ -26,7 +26,7 @@ const Offers = () => {
       setShowSuggestions(initSearchSuggestionsState);
       setSuggestions([]);
    });
-   const filteredOffers = isSuccess ? filterData(searchTerm, allOffers, filters) : [];
+   const filteredOffers = isSuccess ? filterOffers(searchTerm, allOffers, filters) : [];
    const isAnySuggestion = suggestions.length > 0;
 
    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
