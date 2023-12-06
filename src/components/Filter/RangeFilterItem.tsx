@@ -8,10 +8,10 @@ import { findMaxSalaryFrom } from '../../utils/findMaxSalaryFrom';
 interface FilterItemProps {
    title: string;
    section: FilterGroup.SALARY;
-   inputs: IRangeInput[];
+   input: IRangeInput;
 }
 
-const RangeFilterItem = ({ inputs, section, title }: FilterItemProps) => {
+const RangeFilterItem = ({ input, section, title }: FilterItemProps) => {
    const { data: allOffers } = useOffers();
    const { filters, setFilters } = useFilters();
 
@@ -31,17 +31,14 @@ const RangeFilterItem = ({ inputs, section, title }: FilterItemProps) => {
    return (
       <div className="flex gap-4 flex-col border-t border-gray-light pt-6 mt-6">
          <h3 className="text-sb-12 text-gray-darkest">{title}</h3>
-         {inputs.map(input => (
-            <RangeInput
-               key={input.name}
-               name={input.name}
-               onChange={changeHandler}
-               value={filters[FilterGroup.SALARY]}
-               maxValue={maxSalaryFrom}
-               minValue={0}
-               step={1}
-            />
-         ))}
+         <RangeInput
+            name={input.name}
+            onChange={changeHandler}
+            value={filters[FilterGroup.SALARY]}
+            maxValue={maxSalaryFrom}
+            minValue={0}
+            step={1}
+         />
       </div>
    );
 };

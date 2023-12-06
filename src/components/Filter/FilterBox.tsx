@@ -29,7 +29,7 @@ export const FilterBox = () => {
          <RangeFilterItem
             title="Salary (min.)"
             section={FilterGroup.SALARY}
-            inputs={filterSections.salary}
+            input={filterSections.salary}
          />
       </div>
    );

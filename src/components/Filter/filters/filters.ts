@@ -11,7 +11,7 @@ export interface FilterSections {
    jobType: ICheckboxInput[];
    seniority: ICheckboxInput[];
    location: ICheckboxInput[];
-   salary: IRangeInput[];
+   salary: IRangeInput;
 }
 
 export const filterSections: FilterSections = {
@@ -86,10 +86,8 @@ export const filterSections: FilterSections = {
          group: FilterGroup.LOCATION,
       },
    ],
-   salary: [
-      {
-         name: 'salary',
-         group: FilterGroup.SALARY,
-      },
-   ],
+   salary: {
+      name: 'salary',
+      group: FilterGroup.SALARY,
+   },
 };
