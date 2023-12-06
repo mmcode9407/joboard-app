@@ -27,5 +27,5 @@ const filterByLocation = (location: string[]) => {
    return (offer: Offer) => !location.length || location.includes(offer.workLocation);
 };
 const filterBySalary = (salaryFrom: number) => {
-   return (offer: Offer) => salaryFrom === 0 || salaryFrom >= offer.salaryFrom;
+   return (offer: Offer) => offer.salaryFrom >= salaryFrom;
 };
