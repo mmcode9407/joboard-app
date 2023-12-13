@@ -1,4 +1,5 @@
-﻿import React, { ChangeEvent } from 'react';
+﻿import React, { ChangeEvent, useState } from 'react';
+import { useResizeScreen } from '../../../hooks/useResizeScreen';
 
 export interface RangeInputProps {
    name: string;
@@ -10,12 +11,18 @@ export interface RangeInputProps {
 }
 
 const RangeInput = ({ name, onChange, value, maxValue, minValue, step }: RangeInputProps) => {
+   const [position, setPosition] = useState(0);
+   const { isMobile } = useResizeScreen();
+
    return (
-      <div>
-         <div className="relative mx-[3.5px]">
+      <div className="">
+         <div className="relative h-[40px] md:h-[24px] mx-[3.5px]">
             <p
-               className="relative  -translate-x-1/2 text-md-14 text-gray-dark text-center"
-               style={{ left: `${(value / maxValue) * 100}%` }}>
+               className="absolute inline-block bottom-0 -translate-x-1/2 text-md-16 text-gray-dark text-center"
+               style={{
+                  left: `${(value / maxValue) * 100}%`,
+                  bottom: `${isMobile ? position : 0}px`,
+               }}>
                {value}
             </p>
          </div>
@@ -29,6 +36,10 @@ const RangeInput = ({ name, onChange, value, maxValue, minValue, step }: RangeIn
             value={value}
             className="slider"
             onChange={onChange}
+            onMouseUp={e => setPosition(0)}
+            onMouseDown={e => setPosition(16)}
+            onTouchStart={e => setPosition(16)}
+            onTouchEnd={e => setPosition(0)}
          />
       </div>
    );

@@ -18,7 +18,7 @@ li {
 }
 
 .slider {
-   @apply w-[250px] h-[4px] appearance-none bg-gray-outline rounded-full outline-none cursor-pointer;
+   @apply w-full h-[4px] appearance-none bg-gray-outline rounded-full outline-none cursor-pointer;
 }
 
 .slider::-webkit-slider-thumb {
