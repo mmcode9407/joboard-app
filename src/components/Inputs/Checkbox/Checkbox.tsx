@@ -19,7 +19,7 @@ const Checkbox = ({ name, label, onChange, isChecked, value }: CheckboxProps) =>
    return (
       <label
          htmlFor={name}
-         className={`flex gap-2 items-center ${
+         className={`flex gap-2 items-center py-[8.5px] md:py-0 ${
             checked ? 'text-gray-darkest' : 'text-gray-dark'
          } text-reg-14`}>
          <div className=" flex items-center justify-center cursor-pointer ">
