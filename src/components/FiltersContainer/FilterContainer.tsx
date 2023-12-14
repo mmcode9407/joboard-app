@@ -15,7 +15,10 @@ const FilterContainer = () => {
    }, [isMobile]);
 
    return (
-      <header className="relative flex flex-col gap-10 py-5 px-4 md:py-10">
+      <header
+         className={` ${
+            openFilters ? 'h-screen' : ''
+         } relative flex flex-col gap-7 md:gap-10  py-5 px-4 md:py-10`}>
          <div className="flex justify-between items-center">
             <h1 className="text-sb-28 font-bold text-gray-darkest">👾 JO-BOARD</h1>
             <button

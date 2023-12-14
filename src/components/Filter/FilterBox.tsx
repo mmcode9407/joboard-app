@@ -4,7 +4,6 @@ import { filterSections } from './filters/filters';
 import { FilterGroup } from '../../types/types';
 import RangeFilterItem from './RangeFilterItem';
 import { useFilters } from '../../context/FiltersContext';
-import { useResizeScreen } from '../../hooks/useResizeScreen';
 
 export const FilterBox = ({ showOnMobile }: { showOnMobile: boolean }) => {
    const { clearFilters } = useFilters();
@@ -13,7 +12,7 @@ export const FilterBox = ({ showOnMobile }: { showOnMobile: boolean }) => {
       <div
          className={`${
             showOnMobile ? 'block' : 'hidden'
-         }  md:block md:w-[303px] p-6 rounded-md border border-gray-light bg-white z-10`}>
+         }  md:block md:w-[303px] p-6 rounded-md border border-gray-light bg-white overflow-y-auto scrollbar`}>
          <header className="flex items-center justify-between mb-4">
             <h2 className="text-gray-darkest text-sb-16">Filter offers</h2>
             <button className=" w-[95] p-2  text-accent-strong text-md-12" onClick={clearFilters}>
