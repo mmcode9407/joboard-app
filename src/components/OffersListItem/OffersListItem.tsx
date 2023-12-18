@@ -79,7 +79,7 @@ const OffersListItem = ({ offer }: { offer: Offer }) => {
                <p className=" text-reg-12 text-gray-dark">{countDays(updatedAt)} days ago</p>
             </div>
          </li>
-         <Modal open={isOpenModal} onClose={() => setIsOpenModal(false)} />
+         <Modal open={isOpenModal} onClose={() => setIsOpenModal(false)} offer={offer} />
       </>
    );
 };
