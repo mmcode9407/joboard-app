@@ -6,6 +6,7 @@ import Modal from '../Modal/Modal';
 const OffersListItem = ({ offer }: { offer: Offer }) => {
    const [isOpenModal, setIsOpenModal] = useState(false);
    const {
+      _id,
       companyName,
       title,
       image,
@@ -79,7 +80,7 @@ const OffersListItem = ({ offer }: { offer: Offer }) => {
                <p className=" text-reg-12 text-gray-dark">{countDays(updatedAt)} days ago</p>
             </div>
          </li>
-         <Modal open={isOpenModal} onClose={() => setIsOpenModal(false)} offer={offer} />
+         <Modal open={isOpenModal} onClose={() => setIsOpenModal(false)} id={_id} />
       </>
    );
 };
