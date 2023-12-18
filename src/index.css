@@ -5,6 +5,7 @@
 @tailwind utilities;
 
 #root {
+   position: relative;
    min-height: 100vh;
    margin: 0 auto;
 }
@@ -32,11 +33,11 @@ li {
 
 .scrollbar::-webkit-scrollbar-track {
    border-radius: 1.5px;
-   background-color: #F8F8F8;
+   background-color: #f8f8f8;
    box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.3);
 }
 
 .scrollbar::-webkit-scrollbar-thumb {
    border-radius: 1.5px;
-   background-color: #BCBCBC;
+   background-color: #bcbcbc;
 }
