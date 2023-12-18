@@ -1,12 +1,20 @@
 ﻿import React from 'react';
+import { createPortal } from 'react-dom';
 import XMarkIcon from '../../icons/XMarkIcon';
 
-const Modal = () => {
-   return (
+interface ModalProps {
+   open: boolean;
+   onClose: () => void;
+}
+
+const Modal = ({ open, onClose }: ModalProps) => {
+   if (!open) return null;
+
+   return createPortal(
       <>
          <div className="fixed top-0 left-0 right-0 bottom-0 bg-black opacity-20 z-20" />
          <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col gap-6 max-w-[1094px] w-full h-[800px] px-[67px] pt-16 pb-11 rounded-md bg-white border border-solid border-gray-light z-20">
-            <button className="absolute top-5 right-5 ">
+            <button className="absolute top-5 right-5 " onClick={onClose}>
                <XMarkIcon />
             </button>
             <div className="flex gap-6">
@@ -129,7 +137,8 @@ const Modal = () => {
                </div>
             </div>
          </div>
-      </>
+      </>,
+      document.getElementById('portal') as HTMLElement,
    );
 };
 
