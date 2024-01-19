@@ -21,7 +21,7 @@ const Modal = ({ open, onClose, id }: ModalProps) => {
    return createPortal(
       <>
          <div className="fixed top-0 left-0 right-0 bottom-0 bg-black opacity-20 z-20" />
-         <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col gap-6 max-w-[1094px] w-full h-[800px] px-[67px] pt-16 pb-11 rounded-md bg-white border border-solid border-gray-light z-20">
+         <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col gap-6 max-w-[1094px] w-full max-h-screen h-full px-[67px] pt-16 pb-11 rounded-md bg-white border border-solid border-gray-light z-20  overflow-y-auto scrollbar">
             <button className="absolute top-5 right-5 " onClick={onClose}>
                <XMarkIcon />
             </button>
@@ -42,8 +42,8 @@ const Modal = ({ open, onClose, id }: ModalProps) => {
                         </p>
                      </div>
                   </div>
-                  <div className="flex gap-[18px] w-full overflow-y-auto">
-                     <div className="basis-2/3 bg-gray-lightest p-7 overflow-y-auto">
+                  <div className="flex gap-[18px] w-full">
+                     <div className="basis-2/3 bg-gray-lightest p-7">
                         <h3 className="text-sb-20 text-gray-dark">{offer?.title}</h3>
                         <br />
                         <p className="text-md-14 text-gray-dark">{offer?.description}</p>
